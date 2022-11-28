@@ -188,6 +188,8 @@ class Checkout extends Component<
             subscribeToConsignments,
         } = this.props;
 
+        console.log(this.props);
+
         try {
             const { data } = await loadCheckout(checkoutId, {
                 params: {
