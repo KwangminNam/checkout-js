@@ -35,8 +35,10 @@ export interface WithCheckoutBillingProps {
     isInitializing: boolean;
     isUpdating: boolean;
     shouldShowOrderComments: boolean;
+    hasDigitalItems:any;
     billingAddress?: Address;
     methodId?: string;
+    useFloatingLabel?: boolean;
     getFields(countryCode?: string): FormField[];
     initialize(): Promise<CheckoutSelectors>;
     updateAddress(address: Partial<Address>): Promise<CheckoutSelectors>;
@@ -164,6 +166,7 @@ function mapToBillingProps({
         shouldShowOrderComments: enableOrderComments && getShippableItemsCount(cart) < 1,
         updateAddress: checkoutService.updateBillingAddress,
         updateCheckout: checkoutService.updateCheckout,
+        hasDigitalItems: cart.lineItems.digitalItems.length
     };
 }
 

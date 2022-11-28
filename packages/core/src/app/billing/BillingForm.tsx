@@ -39,6 +39,7 @@ export interface BillingFormProps {
     isUpdating: boolean;
     methodId?: string;
     shouldShowOrderComments: boolean;
+    hasDigitalItems:any;
     getFields(countryCode?: string): FormField[];
     onSubmit(values: BillingFormValues): void;
     onUnhandledError(error: Error): void;
@@ -69,10 +70,13 @@ class BillingForm extends PureComponent<
             countries,
             isUpdating,
             setFieldValue,
-            shouldShowOrderComments,
+            // shouldShowOrderComments,
             values,
             methodId,
+            hasDigitalItems,
         } = this.props;
+
+        console.log(hasDigitalItems);
 
         const shouldRenderStaticAddress = methodId === 'amazonpay';
         const allFormFields = getFields(values.countryCode);
@@ -129,7 +133,7 @@ class BillingForm extends PureComponent<
                     )}
                 </Fieldset>
 
-                {shouldShowOrderComments && <OrderComments />}
+                {hasDigitalItems < 0 && <OrderComments />}
 
                 <div className="form-actions">
                     <Button

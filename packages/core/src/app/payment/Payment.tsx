@@ -24,7 +24,7 @@ import { EMPTY_ARRAY } from '../common/utility';
 import { withLanguage, WithLanguageProps } from '../locale';
 import { TermsConditionsType } from '../termsConditions';
 import { LoadingOverlay } from '../ui/loading';
-
+import { Button, ButtonSize, ButtonVariant } from '../ui/button';
 import mapSubmitOrderErrorMessage, { mapSubmitOrderErrorTitle } from './mapSubmitOrderErrorMessage';
 import mapToOrderRequestBody from './mapToOrderRequestBody';
 import PaymentContext from './PaymentContext';
@@ -39,6 +39,7 @@ export interface PaymentProps {
     errorLogger: ErrorLogger;
     isEmbedded?: boolean;
     isUsingMultiShipping?: boolean;
+    customizeCheckout: string;
     checkEmbeddedSupport?(methodIds: string[]): void; // TODO: We're currently doing this check in multiple places, perhaps we should move it up so this check get be done in a single place instead.
     onCartChangedError?(error: CartChangedError): void;
     onFinalize?(): void;
@@ -161,6 +162,7 @@ class Payment extends Component<
             isUsingMultiShipping,
             methods,
             applyStoreCredit,
+            customizeCheckout,
             ...rest
         } = this.props;
 
@@ -176,6 +178,11 @@ class Payment extends Component<
         const uniqueSelectedMethodId =
             selectedMethod && getUniquePaymentMethodId(selectedMethod.id, selectedMethod.gateway);
 
+        const checkoutTest = () => {
+            const payUrl = `https://payment.madive.co.kr/openPayment?id=${customizeCheckout}`;
+            alert(payUrl);
+            window.open(payUrl, "cjPayPop", "width=480,height=640,scrollbars=yes,resizable=yes,location=no");
+        };
         return (
             <PaymentContext.Provider value={this.getContextValue()}>
                 <LoadingOverlay isLoading={!isReady} unmountContentWhenLoading>
@@ -210,6 +217,14 @@ class Payment extends Component<
                             }
                         />
                     )}
+                    <Button
+                        className="button--slab"
+                        size={ButtonSize.Large}
+                        variant={ButtonVariant.Primary}
+                        onClick={checkoutTest}
+                    >
+                        <span>Go to Payment</span>
+                    </Button>
                 </LoadingOverlay>
 
                 {this.renderOrderErrorModal()}

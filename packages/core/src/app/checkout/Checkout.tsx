@@ -188,8 +188,6 @@ class Checkout extends Component<
             subscribeToConsignments,
         } = this.props;
 
-        console.log(this.props);
-
         try {
             const { data } = await loadCheckout(checkoutId, {
                 params: {
@@ -457,7 +455,7 @@ class Checkout extends Component<
     }
 
     private renderPaymentStep(step: CheckoutStepStatus): ReactNode {
-        const { consignments, cart, errorLogger } = this.props;
+        const { consignments, cart, errorLogger , checkoutId } = this.props;
 
         return (
             <CheckoutStep
@@ -483,6 +481,7 @@ class Checkout extends Component<
                         onSubmit={this.navigateToOrderConfirmation}
                         onSubmitError={this.handleError}
                         onUnhandledError={this.handleUnhandledError}
+                        customizeCheckout={checkoutId}
                     />
                 </LazyContainer>
             </CheckoutStep>

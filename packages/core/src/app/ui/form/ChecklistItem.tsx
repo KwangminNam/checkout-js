@@ -27,6 +27,7 @@ const ChecklistItem: FunctionComponent<ChecklistItemProps> = ({
 }) => {
     const { name = '' } = useContext(ChecklistContext) || {};
 
+
     const renderInput = useCallback(
         memoizeOne((isSelected: boolean) => ({ field }: FieldProps) => (
             <ChecklistItemInput

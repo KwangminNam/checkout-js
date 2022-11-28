@@ -1,12 +1,15 @@
-import { Coupon, GiftCertificate, Tax } from '@bigcommerce/checkout-sdk';
+import { Coupon, GiftCertificate, Tax , LineItemMap} from '@bigcommerce/checkout-sdk';
 import React, { FunctionComponent, memo } from 'react';
-
 import { TranslatedString } from '../locale';
-
 import OrderSummaryDiscount from './OrderSummaryDiscount';
 import OrderSummaryPrice from './OrderSummaryPrice';
+import OrderSummaryTest from './OrderSummaryTest';
+import { findIndex } from 'lodash';
+
+
 
 export interface OrderSummarySubtotalsProps {
+    lineitems:LineItemMap;
     coupons: Coupon[];
     giftCertificates?: GiftCertificate[];
     discountAmount?: number;
@@ -21,6 +24,7 @@ export interface OrderSummarySubtotalsProps {
 }
 
 const OrderSummarySubtotals: FunctionComponent<OrderSummarySubtotalsProps> = ({
+    lineitems,
     discountAmount,
     giftCertificates,
     taxes,
@@ -33,13 +37,45 @@ const OrderSummarySubtotals: FunctionComponent<OrderSummarySubtotalsProps> = ({
     onRemovedGiftCertificate,
     onRemovedCoupon,
 }) => {
+    
+    const index = findIndex(lineitems!.physicalItems!, { sku: "COD1" });
+    const index2 = findIndex(lineitems!.physicalItems!, { sku: "COD2" });
+    const index3 = findIndex(lineitems!.physicalItems!, { sku: "COD3" });
+    const index4 = findIndex(lineitems!.physicalItems!, { sku: "COD4" });
+    
+    // index는 sku값 COD1 을 갖고있는 index를 찾아줌. by loadsh.findIndex();
+
+    console.log(index);
     return (
         <>
             <OrderSummaryPrice
                 amount={subtotalAmount}
                 className="cart-priceItem--subtotal"
-                label={<TranslatedString id="cart.subtotal_text" />}
+                label={ <TranslatedString id="cart.subtotal_text" /> }
                 testId="cart-subtotal"
+            />
+
+            {/* 
+                Test Component 
+                amount 같은 경우 lineitem.physicalitems[sku값 갖고있는 인덱스]의 listPrice 호출
+             */}
+
+            <OrderSummaryTest
+                amount={ 
+                    index > -1 ? lineitems!.physicalItems[index]!.listPrice
+                    : (index2 > -1 ? 
+                        lineitems.physicalItems[index2]!.listPrice
+                        :
+                        index3 > -1 ? 
+                        lineitems.physicalItems[index3]!.listPrice
+                        :
+                        index4 > -1 ? 
+                        lineitems.physicalItems[index4]!.listPrice
+                        :0
+                    )
+                }
+                label={<TranslatedString id="cart.cash_on_delivery" />}
+                testId="cart-cod"
             />
 
             {(coupons || []).map((coupon, index) => (

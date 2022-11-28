@@ -30,14 +30,19 @@ const OrderSummary: FunctionComponent<OrderSummaryProps & OrderSummarySubtotalsP
 
     return (
         <article className="cart optimizedCheckout-orderSummary" data-test="cart">
-            <OrderSummaryHeader>{headerLink}</OrderSummaryHeader>
+            <OrderSummaryHeader>
+                {headerLink}
+            </OrderSummaryHeader>
 
             <OrderSummarySection>
                 <OrderSummaryItems items={nonBundledLineItems} />
             </OrderSummarySection>
 
             <OrderSummarySection>
-                <OrderSummarySubtotals {...orderSummarySubtotalsProps} />
+                <OrderSummarySubtotals 
+                 {...orderSummarySubtotalsProps} 
+                 lineitems={nonBundledLineItems}
+                />
                 {additionalLineItems}
             </OrderSummarySection>
 
