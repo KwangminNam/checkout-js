@@ -74,7 +74,7 @@ const OrderSummarySubtotals: FunctionComponent<OrderSummarySubtotalsProps> = ({
                         :0
                     )
                 }
-                label={<TranslatedString id="cart.cash_on_delivery" />}
+                label="Cash on delivery"
                 testId="cart-cod"
             />
 
