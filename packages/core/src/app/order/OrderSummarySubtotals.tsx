@@ -44,8 +44,8 @@ const OrderSummarySubtotals: FunctionComponent<OrderSummarySubtotalsProps> = ({
     const index4 = findIndex(lineitems!.physicalItems!, { sku: "COD4" });
     
     // index는 sku값 COD1 을 갖고있는 index를 찾아줌. by loadsh.findIndex();
-
     console.log(index);
+    
     return (
         <>
             <OrderSummaryPrice
