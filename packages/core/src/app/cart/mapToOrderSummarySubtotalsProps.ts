@@ -14,6 +14,7 @@ export default function mapToOrderSummarySubtotalsProps({
     coupons,
     taxes,
 }: Checkout): OrderSummarySubtotalsProps {
+    console.log(subtotal)
     return {
         lineitems:lineItems,
         subtotalAmount: subtotal,
